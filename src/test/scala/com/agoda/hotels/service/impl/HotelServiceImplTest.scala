@@ -30,6 +30,13 @@ class HotelServiceImplTest extends FunSuite {
     assert(f.service.city2hotel.get("Berlin") === None)
   }
 
+  test("findByCity should be case-insensitive") {
+    val f = fixture
+    f.service.loadHotels()
+    assert(f.service.findByCity("Amsterdam") === f.service.findByCity("AMSTERDAM"))
+    assert(f.service.findByCity("Amsterdam") === f.service.findByCity("AmStErDam"))
+  }
+
   test("testLoadHotels") {
     val f = fixture
     f.service.loadHotels()
