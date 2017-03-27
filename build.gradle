@@ -1,0 +1,51 @@
+buildscript {
+    repositories {
+        maven {
+          url "https://plugins.gradle.org/m2/"
+        }
+
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE"
+        classpath "gradle.plugin.com.github.maiflai:gradle-scalatest:0.15"
+    }
+}
+
+apply plugin: 'scala'
+apply plugin: 'spring-boot'
+apply plugin: "com.github.maiflai.scalatest"
+
+jar {
+    baseName = 'hotels-api'
+    version = '0.1.0-SNAPSHOT'
+}
+
+springBoot {
+    mainClass = "com.agoda.hotels.Application"
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        url "https://mvnrepository.com/artifact"
+    }
+}
+
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.12.1'
+    compile("org.springframework.boot:spring-boot-starter-web")
+
+    testCompile 'junit:junit:4.12' // todo: do wywalenia?
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.scalatest:scalatest_2.12:3.0.1'
+//    testCompile 'org.scalamock:scalamock-scalatest-support_2.12:3.5.0'
+//    testCompile group: 'org.scalamock', name: 'scalamock-core_2.9.2', version: '2.4'
+//    testCompile "org.scalamock:scalamock-scalatest-support:3.5.0" // 3.5.0
+
+    // https://mvnrepository.com/artifact/org.scalamock/scalamock-scalatest-support_2.12
+    testCompile group: 'org.scalamock', name: 'scalamock-scalatest-support_2.12', version: '3.5.0'
+
+    testRuntime 'org.pegdown:pegdown:1.4.2'
+}
