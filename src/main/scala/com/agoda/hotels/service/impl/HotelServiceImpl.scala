@@ -2,7 +2,7 @@ package com.agoda.hotels.service.impl
 
 import javax.annotation.PostConstruct
 
-import com.agoda.hotels.model.{RoomType, Hotel}
+import com.agoda.hotels.model.{Order, RoomType, Hotel}
 import com.agoda.hotels.service.HotelService
 import org.springframework.stereotype.Service
 
@@ -18,9 +18,13 @@ class HotelServiceImpl extends HotelService {
     */
   private[impl] val city2hotel = new mutable.HashMap[String, mutable.Set[Hotel]] with mutable.MultiMap[String, Hotel]
 
-  override def findByCity(city: String): List[Hotel] = {
+  override def findByCity(city: String, order: Order = null): List[Hotel] = {
     city2hotel.get(city.toLowerCase()) match {
-      case Some(x) => x.toList
+      case Some(hotels) => order match {
+        case Order.ASC => hotels.toList.sortWith(_.price > _.price)
+        case Order.DESC => hotels.toList.sortWith(_.price < _.price)
+        case null => hotels.toList
+      }
       case None => List()
     }
   }

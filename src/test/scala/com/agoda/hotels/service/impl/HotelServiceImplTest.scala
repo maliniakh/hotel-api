@@ -1,6 +1,6 @@
 package com.agoda.hotels.service.impl
 
-import com.agoda.hotels.model.Hotel
+import com.agoda.hotels.model.{Order, Hotel}
 import org.scalatest._
 
 /**
@@ -33,8 +33,14 @@ class HotelServiceImplTest extends FunSuite {
   test("findByCity should be case-insensitive") {
     val f = fixture
     f.service.loadHotels()
-    assert(f.service.findByCity("Amsterdam") === f.service.findByCity("AMSTERDAM"))
+    assert(f.service.findByCity("Amsterdam") ===  f.service.findByCity("AMSTERDAM"))
     assert(f.service.findByCity("Amsterdam") === f.service.findByCity("AmStErDam"))
+  }
+
+  test("findByCity should sort results if needed") {
+    val f = fixture
+    f.service.loadHotels()
+    assert(f.service.findByCity("Amsterdam", Order.ASC) ===  f.service.findByCity("amsterdam", Order.DESC).reverse)
   }
 
   test("testLoadHotels") {
