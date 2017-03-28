@@ -19,9 +19,7 @@ class HotelsController (@Autowired val hotelService: HotelService)  {
   @RequestBody
   def greeting(@RequestParam("city") city: String,
                @RequestParam(value = "order", required = false) order: Order): java.util.List[Hotel] = {
-    val cities: List[Hotel] = hotelService.findByCity(city)
-
-    cities.asJava
+    hotelService.findByCity(city, order).asJava
   }
 
   @InitBinder

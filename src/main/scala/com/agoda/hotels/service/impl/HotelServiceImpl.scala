@@ -21,8 +21,8 @@ class HotelServiceImpl extends HotelService {
   override def findByCity(city: String, order: Order = null): List[Hotel] = {
     city2hotel.get(city.toLowerCase()) match {
       case Some(hotels) => order match {
-        case Order.ASC => hotels.toList.sortWith(_.price > _.price)
-        case Order.DESC => hotels.toList.sortWith(_.price < _.price)
+        case Order.ASC => hotels.toList.sortWith(_.price < _.price)
+        case Order.DESC => hotels.toList.sortWith(_.price > _.price)
         case null => hotels.toList
       }
       case None => List()
