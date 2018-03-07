@@ -14,6 +14,7 @@ import scala.collection.mutable
 
 /**
   * Interceptor implementing simple token-bucket-like algorithm for limitnig requests rate.
+  * TODO: needs synchronization
   */
 @Component
 class RateLimitInterceptorTokenBucketImpl(@Value("${hotels.rates.low}") val rateLow: Int,
